@@ -1,0 +1,38 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:product_import_tasks) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to Spree.t(:new_product_import_task), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_product_import_task' } %>
+<% end if can?(:create, Spree::Product) %>
+
+<table class="table" id="listing_products">
+  <thead>
+  <tr data-hook="admin_products_index_headers">
+    <th colspan="2"><%= Spree.t(:id) %></th>
+    <th><%= Spree.t(:created_at) %></th>
+    <th><%= Spree.t(:filename) %></th>
+    <th><%= Spree.t(:filesize) %></th>
+    <th><%= Spree.t(:status) %></th>
+    <th data-hook="admin_custom_model_names_index_header_actions" class="actions"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @product_import_tasks.each do |product_import_task| %>
+    <tr id="<%= spree_dom_id product_import_task %>" data-hook="admin_product_import_task_index_rows" class="<%= cycle('odd', 'even') %>">
+      <td colspan="2"><%= product_import_task.id %></td>
+      <td><%= Spree.l(product_import_task.created_at, format: :short) %></td>
+      <td><%= product_import_task.filename %></td>
+      <td><%= product_import_task.filesize %></td>
+      <td><span class="label label-active"><%= Spree.t(product_import_task.status) %></span></td>
+
+      <td class="actions actions-3 text-right" data-hook="product_import_task_index_row_actions">
+        <%= link_to_with_icon('refresh', Spree.t(:restart), restart_admin_product_import_task_path(product_import_task),
+                              method: :post, class: 'btn btn-primary btn-sm') if product_import_task.process_available? %>
+        <%= link_to_delete product_import_task, no_text: true if can?(:delete, product_import_task) %>
+      </td>
+
+    </tr>
+  <% end %>
+  </tbody>
+</table>

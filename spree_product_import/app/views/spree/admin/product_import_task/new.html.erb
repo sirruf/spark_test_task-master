@@ -1,0 +1,19 @@
+<%= render partial: 'spree/admin/shared/error_messages', locals: { target: @product_import } %>
+
+<% content_for :page_title do %>
+  <%= link_to Spree.t(:product_import_task), spree.admin_product_import_task_index_url %> /
+  <%= Spree.t(:new) %>
+<% end %>
+
+<%= form_for :products, url: spree.admin_product_import_task_index_path, html: { multipart: true } do |f| %>
+  <fieldset data-hook="new_product_import">
+    <%= f.field_container :csv_file, class: ['form-group'] do %>
+      <%= f.label :csv_file, Spree.t(:csv_file) %> <span class="required">*</span>
+      <%= f.file_field :csv_file, class: 'form-control title', required: :required, accept: 'text/csv' %>
+      <%= f.error_message_on :csv_file %>
+    <% end %>
+
+    <%= render partial: 'spree/admin/shared/new_import_links' %>
+
+  </fieldset>
+<% end %>
