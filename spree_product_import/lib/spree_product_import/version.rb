@@ -1,3 +1,6 @@
+#
+# Version of mountable engine Class
+#
 module SpreeProductImport
   module_function
 

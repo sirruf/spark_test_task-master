@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.email     = 'you@example.com'
   s.homepage  = 'https://github.com/your-github-handle/spree_product_import'
   s.license = 'BSD-3-Clause'
-
+  s.test_files = Dir["spec/**/*"]
   # s.files       = `git ls-files`.split("\n").reject { |f| f.match(/^spec/) && !f.match(/^spec\/fixtures/) }
   s.require_path = 'lib'
   s.requirements << 'none'
@@ -28,13 +28,14 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'capybara-screenshot'
   s.add_development_dependency 'coffee-rails'
   s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'factory_girl'
+  s.add_development_dependency 'factory_bot'
   s.add_development_dependency 'ffaker'
+  s.add_development_dependency 'pg'
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'sass-rails'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'pg'
+  s.add_development_dependency 'sqlite3'
   # s.add_development_dependency 'mysql2'
   s.add_development_dependency 'appraisal'
 end

@@ -18,6 +18,7 @@ require File.expand_path('../dummy/config/environment.rb',  __FILE__)
 require 'rspec/rails'
 require 'database_cleaner'
 require 'ffaker'
+require 'factory_bot'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -34,8 +35,10 @@ require 'spree/testing_support/url_helpers'
 require 'spree_product_import/factories'
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
-
+  config.include FactoryBot::Syntax::Methods
+  # config.before do
+  #   FactoryBot.find_definitions
+  # end
   # Infer an example group's spec type from the file location.
   config.infer_spec_type_from_file_location!
 
@@ -89,5 +92,6 @@ RSpec.configure do |config|
   end
 
   config.fail_fast = ENV['FAIL_FAST'] || false
-  config.order = "random"
+  config.order = 'random'
+  config.shared_context_metadata_behavior = :apply_to_host_groups
 end

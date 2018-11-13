@@ -9,7 +9,6 @@ module Spree
 
     def process
       if process_available?
-        # Spree::ProductImport::TaskProcessor.process(self)
         Spree::ProcessImportJob.perform_later(id)
       else
         update_attributes(status: :unavailable) unless status == 'complete'
@@ -25,18 +24,13 @@ module Spree
       end
     end
 
-    def check_status
-      status_changes = saved_changes['status']
-      clean if status_changes.present? && status_changes[1] == 'complete'
-    end
-
     def process_available?
-      File.exist?(filepath)
+      filepath.present? && File.exist?(filepath)
     end
 
     def self.generate_from(attachment)
       task = new
-      if attachment.tempfile.present?
+      if attachment.present? && attachment.tempfile.present?
         task.update_attributes(filename: attachment.original_filename,
                                content_type: attachment.content_type,
                                filepath: attachment.tempfile.path,
@@ -48,6 +42,11 @@ module Spree
     end
 
     private
+
+    def check_status
+      status_changes = saved_changes['status']
+      clean if status_changes.present? && status_changes[1] == 'complete'
+    end
 
     def clean
       File.delete(filepath) if File.exist?(filepath)

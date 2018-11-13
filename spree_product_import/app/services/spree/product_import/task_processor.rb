@@ -11,9 +11,7 @@ module Spree
 
       def process
         products = []
-        parser = Spree::ProductImport::Parser.new(@task)
-        parsed_data = parser.parse
-        parsed_data.each do |product_data|
+        task_data.each do |product_data|
           product = Spree::ProductImport::Product.generate(product_data)
           products << product
         end
@@ -25,6 +23,13 @@ module Spree
 
       def self.process(task)
         new(task).process
+      end
+
+      private
+
+      def task_data
+        parser = Spree::ProductImport::Parser.new(@task)
+        parser.parse
       end
     end
   end

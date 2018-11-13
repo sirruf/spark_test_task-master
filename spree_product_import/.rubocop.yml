@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - 'bin/**/*'                            # automatic generated
+    - 'lib/generators/**/*'                 # automatic generated
+    - 'lib/spree_product_import/engine.rb'  # automatic generated
+    - 'spec/spec_helper.rb'                 # automatic generated
+    - 'spree_product_import.gemspec'        # automatic generated
+    - 'app/models/spree.rb'                 # automatic generated
+    - 'spec/dummy/**/*'                     # automatic generated
